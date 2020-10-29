@@ -201,17 +201,18 @@ function vestirPersonajePista(){
 		var epp_data = epp_coll[ind]
 		
 		var part = getE('personaje-card-p'+partes[v])
+		part.className = 'prenda'+epps[v]
 		part.style.visibility = 'visible'
 		var div = part.getElementsByTagName('div')[0]
 		div.style.width = epp_data.size.w+'px'
 		div.style.height = epp_data.size.h+'px'
 		div.style.backgroundImage = 'url('+epp_data.url+')'
-		part.style.top = epp_data.size.y+'px'
+		
 		part.style.left = epp_data.size.x+'px'
 
 	}
 
-	getE('card').className = 'card-on'
+	getE('card-cont').className = 'card-on'
 	if(actual_job_data.id==1){
 		getE('personaje-card').className = 'personaje-2'
 		getE('personaje-main').className = 'personaje-2'

@@ -40,12 +40,12 @@
 	padding: 0px;
 	display: block;
 }
-#banda1{top: -2%;}
-#banda2{top: 0%;}
-#banda3{top: 0%;}
-#banda4{top: 21%;}
-#banda5{top: 43%;}
-#banda6{top: 76%;}
+#banda1,.prenda1{top: -2%;z-index: 6;}
+#banda2,.prenda2{top: 0%;}
+#banda3,.prenda3{top: 0%;}
+#banda4,.prenda4{top: 21%;}
+#banda5,.prenda5{top: 43%;}
+#banda6,.prenda6{top: 76%;}
 
 .banda-epp{
 	position: absolute;
@@ -70,10 +70,34 @@
 	left: 0%;
 }*/
 
-.banda-epp-pos-4{left: 50%;}
-.banda-epp-pos-1{left: 70%;}
-.banda-epp-pos-2{left: 90%;}
-.banda-epp-pos-3{left: 30%;}
+.banda-epp-pos-0{
+	left: 10%;
+	opacity: 0;
+	transition: left 0.4s linear, opacity 0.4s linear;
+	-webkit-transition: left 0.4s linear, opacity 0.4s linear;
+}
+.banda-epp-pos-1{
+	left: 30%;
+	opacity: 0.5;
+	transition: left 0.4s linear, opacity 0.4s linear;
+	-webkit-transition: left 0.4s linear, opacity 0.4s linear;
+}
+.banda-epp-pos-2{
+	left: 50%;
+	opacity: 1;
+	transition: left 0.4s linear, opacity 0.4s linear;
+	-webkit-transition: left 0.4s linear, opacity 0.4s linear;
+}
+.banda-epp-pos-3{
+	left: 70%;
+	opacity: 0.5;
+	transition: left 0.4s linear, opacity 0.4s linear;
+	-webkit-transition: left 0.4s linear, opacity 0.4s linear;
+}
+.banda-epp-pos-4{
+	left: 90%;
+	opacity: 0;
+}
 
 .banda-epp > div{
 	position: absolute;
@@ -84,25 +108,12 @@
 	background-position: center;
 }
 
-
-#card{
+#card-cont{
 	position: absolute;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 275px;
-	height: 402px;
+	width: 120px;
 	box-sizing: border-box;
 	margin: 0px;
 	padding: 0px;
-
-	transform-origin: 0% 0%;
-	-webkit-transform-origin: 0% 0%;
-	-o-transform-origin: 0% 0%;
-
-	transform: scale(0.45);
-	-webkit-transform: scale(0.45);
-	-o-transform: scale(0.45);
 
 	left: 15px;
 }
@@ -141,6 +152,31 @@
 		top: 50px;
 		opacity: 0;
 	}
+}
+
+#card{
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 275px;
+	height: 402px;
+	box-sizing: border-box;
+	margin: 0px;
+	padding: 0px;
+
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	background-image: url(../images/card.png);
+
+	transform-origin: 0% 0%;
+	-webkit-transform-origin: 0% 0%;
+	-o-transform-origin: 0% 0%;
+
+	transform: scale(0.45);
+	-webkit-transform: scale(0.45);
+	-o-transform: scale(0.45);
 }
 
 #personaje-card{
@@ -182,5 +218,53 @@
 	box-sizing: border-box;
 	margin: 0px;
 	padding: 0px;
+}
+
+#card-flecha{
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	margin-top: 0px;
+
+	width: 100%;
+	height: auto;
+	box-sizing: border-box;
+}
+
+#card-flecha-img{
+	position: relative;
+	display: block;
+	width: 25px;
+	height: 50px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	background-image: url(../images/flecha.svg);
+	margin: 0px auto;
+	margin-bottom: 10px;
+
+	animation-name: animacion-flecha;
+	animation-duration: 0.4s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-animation-name: animacion-flecha;
+	-webkit-animation-duration: 0.4s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+}
+#card-flecha-txt{
+	display: block;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+
+	font-family: 'FSJoey-Bold';
+	font-size: 16px;
+	color: #FFFFFF;
+	text-align: center;
+	font-weight: normal;
+	line-height: normal;
+
+	text-shadow: 0px 0px 3px rgba(0,0,0,0.5);
 }
 /****************************************************/
