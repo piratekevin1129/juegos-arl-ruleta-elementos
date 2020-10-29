@@ -1,0 +1,186 @@
+/*********************CONTENT HERE*******************/
+.fondo-1{
+    background-image: url(../images/escenario_1.jpg);
+}
+.fondo-2{
+    background-image: url(../images/escenario_2.jpg);
+}
+.fondo-3{
+    background-image: url(../images/escenario_3.jpg);
+}
+
+#bandas{
+	position: absolute;
+	width: 100%;
+	height: 370px;
+
+	left: 0px;
+	top: 50%;
+    top: calc(50% - (370px / 2));
+    top: -moz-calc(50% - (370px / 2));
+	box-sizing: border-box;
+}
+.banda-wrap{
+	position: absolute;
+	width: 100%;
+	background-color: rgba(255,255,255,0.1);
+	margin: 0px;
+	padding: 0px;
+	display: block;
+}
+
+.banda{
+	position: absolute;
+	width: 100%;
+	/*width: calc(100% * 2);
+	width: -moz-calc(100% * 2);*/
+	height: 100%;
+	
+	margin: 0px;
+	padding: 0px;
+	display: block;
+}
+#banda1{top: -2%;}
+#banda2{top: 0%;}
+#banda3{top: 0%;}
+#banda4{top: 21%;}
+#banda5{top: 43%;}
+#banda6{top: 76%;}
+
+.banda-epp{
+	position: absolute;
+	top: 0px;
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	display: inline-block;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+}
+/*.banda-epp::after{
+	position: absolute;
+	content: "";
+	width: 2px;
+	height: 2px;
+	background-color: #000000;
+	top: 50%;
+	top: calc(50% - 1px);
+	top: -moz-calc(50% - 1px);
+	left: 0%;
+}*/
+
+.banda-epp-pos-4{left: 50%;}
+.banda-epp-pos-1{left: 70%;}
+.banda-epp-pos-2{left: 90%;}
+.banda-epp-pos-3{left: 30%;}
+
+.banda-epp > div{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}
+
+
+#card{
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 275px;
+	height: 402px;
+	box-sizing: border-box;
+	margin: 0px;
+	padding: 0px;
+
+	transform-origin: 0% 0%;
+	-webkit-transform-origin: 0% 0%;
+	-o-transform-origin: 0% 0%;
+
+	transform: scale(0.45);
+	-webkit-transform: scale(0.45);
+	-o-transform: scale(0.45);
+
+	left: 15px;
+}
+.card-on{
+	animation-name: animacion-carta-on;
+	animation-duration: 4s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-timing-function: linear;
+	-webkit-animation-name: animacion-carta-on;
+	-webkit-animation-duration: 4s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-timing-function: linear;
+}
+.card-off{
+	top: 50px;
+	opacity: 0;
+	transition: top 0.3s, opacity 0.3s;
+	-webkit-transition: top 0.3s, opacity 0.3s;
+}
+@keyframes animacion-carta-on{
+	0%{
+		top: 50px;
+		opacity: 0;
+	}
+	10%{
+		top: 15px;
+		opacity: 1;
+	}
+	90%{
+		top: 15px;
+		opacity: 1;
+	}
+	100%{
+		top: 50px;
+		opacity: 0;
+	}
+}
+
+#personaje-card{
+	position: relative;
+    display: block;
+    width: 132px;
+    height: 370px;
+    
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0px;
+    box-sizing: border-box;
+    padding: 0px;
+}
+#personaje-card::after{
+	position: absolute;
+	width: 36px;
+	height: 10px;
+	top: 13%;
+	left: 41.8%;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+	background-image: url(../images/ojos.png);
+	box-sizing: border-box;
+}
+
+#personaje-card > div{
+	position: absolute;
+	transform: translateX(50%) translateY(50%);
+	-webkit-transform: translateX(50%) translateY(50%);
+	-o-transform: translateX(50%) translateY(50%);
+}
+#personaje-card > div > div{
+	position: relative;
+	box-sizing: border-box;
+	margin: 0px;
+	padding: 0px;
+}
+/****************************************************/
