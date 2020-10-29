@@ -99,6 +99,8 @@ function findEpp(id,coll){
 
 var actual_job = 0
 var actual_job_data = escenarios[actual_job]
+var bandas_data = []
+
 function setGame(){
 	setFondo()
 	//cargar las imagenes de los elementos
@@ -156,26 +158,50 @@ function putBands(){
 
 		var band_div = document.createElement('div')
 		band_div.className = 'banda'
-		
+
+		var array = []
 		var epp_collection = elementos[inx].elementos
+		var unorder = unorderArray(epp_collection.length)
 		for(j = 0;j<epp_collection.length;j++){
+			var u = unorder[j]
 			var div_epp = document.createElement('div')
+			div_epp.id = 'epp-'+elementos[inx].id+'-'+epp_collection[u].id
 			div_epp.className = 'banda-epp banda-epp-pos-'+(j+1)
-			div_epp.style.width = epp_collection[j].size.w+'px'
-			div_epp.style.height = epp_collection[j].size.h+'px'
-			div_epp.innerHTML = '<div class="banda-epp-img" style="background-image:url('+epp_collection[j].url+'); top:'+epp_collection[j].size.y+'px; left:'+epp_collection[j].size.x+'px;"></div>'
+			div_epp.setAttribute('pos',(j+1))
+			div_epp.style.width = epp_collection[u].size.w+'px'
+			div_epp.style.height = epp_collection[u].size.h+'px'
+			div_epp.innerHTML = '<div class="banda-epp-img" style="background-image:url('+epp_collection[u].url+'); top:'+epp_collection[u].size.y+'px; left:'+epp_collection[u].size.x+'px;"></div>'
 			band_div.appendChild(div_epp)
+			array.push(div_epp)
 		}
+
 
 		band_wp.appendChild(band_div)
 		getE('bandas').appendChild(band_wp)
+		bandas_data.push({
+			id:bands[i],
+			epps:array
+		})
 	}
-	console.log("listo")
+	console.log(bandas_data)
 }
 
 //aqui se empieza en forma
+var animacion_pista = null
 function startGame(){
 	vestirPersonajePista()
+
+	animacion_pista = setTimeout(function(){
+		clearTimeout(animacion_pista)
+		animacion_pista = null
+		getE('card-cont').className = 'card-off'
+
+		//ordenar orden de las bandas
+		orden_bandas = actual_job_data.parts.sort()
+		findBanda()
+		animarRueda()	
+	},4000)
+	
 }
 
 function setFondo(){
@@ -201,15 +227,14 @@ function vestirPersonajePista(){
 		var epp_data = epp_coll[ind]
 		
 		var part = getE('personaje-card-p'+partes[v])
-		part.className = 'prenda'+epps[v]
 		part.style.visibility = 'visible'
-		var div = part.getElementsByTagName('div')[0]
-		div.style.width = epp_data.size.w+'px'
-		div.style.height = epp_data.size.h+'px'
-		div.style.backgroundImage = 'url('+epp_data.url+')'
-		
-		part.style.left = epp_data.size.x+'px'
+		part.style.width = epp_data.size.w+'px'
+		part.style.height = epp_data.size.h+'px'
 
+		var div = part.getElementsByTagName('div')[0]
+		div.style.backgroundImage = 'url('+epp_data.url+')'
+		div.style.left = epp_data.size.x+'px'
+		div.style.top = epp_data.size.y+'px'
 	}
 
 	getE('card-cont').className = 'card-on'
@@ -223,7 +248,42 @@ function vestirPersonajePista(){
 		getE('personaje-card').className = 'personaje-3'
 		getE('personaje-main').className = 'personaje-3'
 	}
+}
+
+var animacion_rueda = null
+var animacion_para = null
+var actual_banda = 0
+var actual_banda_ind = 0
+var orden_bandas = []
+
+function findBanda(){
+	for(var b = 0;b<bandas_data.length;b++){
+		if(bandas_data[b].id==orden_bandas[actual_banda_ind]){
+			actual_banda = b
+		}
+	}
+}
+
+function animarRueda(){
+	//poner a correr todo
 	
+	animacion_rueda = setTimeout(function(){
+		//esperar y poner titulos
+
+		for(i = 0;i<bandas_data[actual_banda].length;i++){
+			var equipo = bandas_data[actual_banda][i]
+			var actual_pos = Number(equipo.getAttribute('pos'))
+			var new_pos = actual_pos-1
+			if(new_pos<0){
+				new_pos = 4
+			}
+			getE(equipo.id).setAttribute('pos',new_pos)
+			getE(equipo.id).className = 'banda-epp banda-epp-pos-'+new_pos
+		}
+	},400)
+}
+function moveRueda(){
+
 }
 
 

@@ -191,8 +191,8 @@ var escenarios = [
 	{
 		id:1,
 		nombre:'Alcantarilla',
-		parts:[1,4,5,6],
-		epps:[2,1,2,1]
+		parts:[4,5,6,1],
+		epps:[1,2,1,2]
 	},
 	{
 		id:2,
@@ -203,7 +203,7 @@ var escenarios = [
 	{
 		id:3,
 		nombre:'Soldadura',
-		parts:[1,2,4,5],
+		parts:[2,4,5,1],
 		epps:[4,4,4,4]
 	}
 ]

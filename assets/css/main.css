@@ -23,7 +23,7 @@
 .banda-wrap{
 	position: absolute;
 	width: 100%;
-	background-color: rgba(255,255,255,0.1);
+	/*background-color: rgba(255,255,255,1);*/
 	margin: 0px;
 	padding: 0px;
 	display: block;
@@ -40,12 +40,19 @@
 	padding: 0px;
 	display: block;
 }
-#banda1,.prenda1{top: -2%;z-index: 6;}
-#banda2,.prenda2{top: 0%;}
-#banda3,.prenda3{top: 0%;}
-#banda4,.prenda4{top: 21%;}
-#banda5,.prenda5{top: 43%;}
-#banda6,.prenda6{top: 76%;}
+.banda-off{
+	visibility: hidden;
+}
+.banda-on{
+	visibility: visible;
+}
+
+#banda1,#personaje-card-p1{top: -2%;}
+#banda2,#personaje-card-p2{top: 0%;}
+#banda3,#personaje-card-p3{top: 0%;}
+#banda4,#personaje-card-p4{top: 21%;}
+#banda5,#personaje-card-p5{top: 43%;}
+#banda6,#personaje-card-p6{top: 76%;}
 
 .banda-epp{
 	position: absolute;
@@ -107,16 +114,32 @@
 	background-size: contain;
 	background-position: center;
 }
+.banda-epp-item-out{
+	transform: scale(0);
+	-webkit-transform: scale(0);
+	-o-transform: scale(0);
+	opacity: 0;
+}
+.banda-epp-item-in{
+	animation-name: animation-item-in;
+	animation-timing-function: linear;
+	animation-duration: 0.5s;
+	animation-iteration-count: 1;
+	-webkit-animation-name: animation-item-in;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-iteration-count: 1;
+}
 
 #card-cont{
 	position: absolute;
-	width: 120px;
 	box-sizing: border-box;
 	margin: 0px;
 	padding: 0px;
 
 	left: 15px;
 }
+
 .card-on{
 	animation-name: animacion-carta-on;
 	animation-duration: 4s;
@@ -132,8 +155,6 @@
 .card-off{
 	top: 50px;
 	opacity: 0;
-	transition: top 0.3s, opacity 0.3s;
-	-webkit-transition: top 0.3s, opacity 0.3s;
 }
 @keyframes animacion-carta-on{
 	0%{
@@ -154,8 +175,17 @@
 	}
 }
 
-#card{
+#card-wrap{
 	position: relative;
+	width: 125px;
+	height: 181px;
+	margin: 0px;
+	overflow: hidden;
+	padding: 0px;
+	box-sizing: border-box;
+}
+#card{
+	position: absolute;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -191,13 +221,18 @@
     margin: 0px;
     box-sizing: border-box;
     padding: 0px;
+
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    -o-transform: scale(0.9);
 }
 #personaje-card::after{
+	content: "";
 	position: absolute;
 	width: 36px;
 	height: 10px;
-	top: 13%;
-	left: 41.8%;
+	top: 35px;
+    left: 44px;
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -209,24 +244,27 @@
 
 #personaje-card > div{
 	position: absolute;
-	transform: translateX(50%) translateY(50%);
-	-webkit-transform: translateX(50%) translateY(50%);
-	-o-transform: translateX(50%) translateY(50%);
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+	left: 50%;
 }
 #personaje-card > div > div{
-	position: relative;
+	position: absolute;
 	box-sizing: border-box;
 	margin: 0px;
 	padding: 0px;
+	width: 100%;
+	height: 100%;
 }
 
 #card-flecha{
 	position: relative;
 	margin: 0px;
 	padding: 0px;
-	margin-top: 0px;
+	margin-top: 20px;
 
-	width: 100%;
+	width: 125px;
 	height: auto;
 	box-sizing: border-box;
 }
@@ -241,14 +279,13 @@
 	background-position: center;
 	background-image: url(../images/flecha.svg);
 	margin: 0px auto;
-	margin-bottom: 10px;
 
 	animation-name: animacion-flecha;
-	animation-duration: 0.4s;
+	animation-duration: 0.5s;
 	animation-iteration-count: infinite;
 	animation-timing-function: linear;
 	-webkit-animation-name: animacion-flecha;
-	-webkit-animation-duration: 0.4s;
+	-webkit-animation-duration: 0.5s;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
 }
@@ -256,6 +293,7 @@
 	display: block;
 	width: 100%;
 	margin: 0px;
+	margin-top: 10px;
 	padding: 0px;
 
 	font-family: 'FSJoey-Bold';
@@ -265,6 +303,46 @@
 	font-weight: normal;
 	line-height: normal;
 
-	text-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+	text-shadow: 0px 0px 3px rgba(0,0,0,0.8);
+}
+@keyframes animacion-flecha{
+	0%{
+		top: 10px;
+	}
+	50%{
+		top: -10px;
+	}
+	100%{
+		top: 10px;
+	}
+}
+
+#tag-txt{
+	position: absolute;
+	width: 100%;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0px;
+	padding: 0px;
+
+	font-family: 'FSJoey-Bold';
+	font-size: 18px;
+	color: #FFFFFF;
+	text-align: center;
+	font-weight: normal;
+	line-height: normal;
+
+	text-shadow: 0px 0px 3px rgba(0,0,0,0.8);
+
+	transition: opacity 0.1s;
+	-webkit-transition: opacity 0.1s;
+}
+.tag-txt-on{
+	opacity: 1;
+}
+.tag-txt-off{
+	opacity: 0;
 }
 /****************************************************/
