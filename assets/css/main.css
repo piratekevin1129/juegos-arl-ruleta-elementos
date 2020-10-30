@@ -28,6 +28,12 @@
 	padding: 0px;
 	display: block;
 }
+.banda-off{
+	visibility: hidden;
+}
+.banda-on{
+	visibility: visible;
+}
 
 .banda{
 	position: absolute;
@@ -39,12 +45,6 @@
 	margin: 0px;
 	padding: 0px;
 	display: block;
-}
-.banda-off{
-	visibility: hidden;
-}
-.banda-on{
-	visibility: visible;
 }
 
 #banda1,#personaje-card-p1{top: -2%;}
@@ -65,45 +65,89 @@
 	-webkit-transform: translateX(-50%);
 	-o-transform: translateX(-50%);
 }
-/*.banda-epp::after{
-	position: absolute;
-	content: "";
-	width: 2px;
-	height: 2px;
-	background-color: #000000;
-	top: 50%;
-	top: calc(50% - 1px);
-	top: -moz-calc(50% - 1px);
-	left: 0%;
-}*/
+
+.banda-epp-pos-0,
+.banda-epp-pos-1,
+.banda-epp-pos-2,
+.banda-epp-pos-3,
+.banda-epp-pos-4{
+	animation-duration: 0.4s;
+	animation-timing-function: linear;
+	animation-iteration-count: 1;
+	-webkit-animation-duration: 0.4s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: 1;
+}
 
 .banda-epp-pos-0{
-	left: 10%;
-	opacity: 0;
-	transition: left 0.4s linear, opacity 0.4s linear;
-	-webkit-transition: left 0.4s linear, opacity 0.4s linear;
-}
-.banda-epp-pos-1{
-	left: 30%;
-	opacity: 0.5;
-	transition: left 0.4s linear, opacity 0.4s linear;
-	-webkit-transition: left 0.4s linear, opacity 0.4s linear;
-}
-.banda-epp-pos-2{
-	left: 50%;
-	opacity: 1;
-	transition: left 0.4s linear, opacity 0.4s linear;
-	-webkit-transition: left 0.4s linear, opacity 0.4s linear;
-}
-.banda-epp-pos-3{
-	left: 70%;
-	opacity: 0.5;
-	transition: left 0.4s linear, opacity 0.4s linear;
-	-webkit-transition: left 0.4s linear, opacity 0.4s linear;
-}
-.banda-epp-pos-4{
 	left: 90%;
 	opacity: 0;
+	animation-name: animacion-pos-0;
+	-webkit-animation-name: animacion-pos-0;
+}
+.banda-epp-pos-1{
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	animation-name: animacion-pos-1;
+	-webkit-animation-name: animacion-pos-1;
+}
+.banda-epp-pos-2{
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	animation-name: animacion-pos-2;
+	-webkit-animation-name: animacion-pos-2;
+}
+.banda-epp-pos-3{
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	animation-name: animacion-pos-3;
+	-webkit-animation-name: animacion-pos-3;
+}
+.banda-epp-pos-4{
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	animation-name: animacion-pos-4;
+	-webkit-animation-name: animacion-pos-4;
+}
+@keyframes animacion-pos-0{
+	0%{
+		left: 30%;
+		opacity: 0.5;
+	}
+	100%{
+		left: 10%;
+		opacity: 0;
+	}
+}
+@keyframes animacion-pos-1{
+	0%{
+		left: 50%;
+		opacity: 1;
+	}
+	100%{
+		left: 30%;
+		opacity: 0.5;
+	}
+}
+@keyframes animacion-pos-2{
+	0%{
+		left: 70%;
+		opacity: 0.5;
+	}
+	100%{
+		left: 50%;
+		opacity: 1;
+	}
+}
+@keyframes animacion-pos-3{
+	0%{
+		left: 90%;
+		opacity: 0;
+	}
+	100%{
+		left: 70%;
+		opacity: 0.5;
+	}
 }
 
 .banda-epp > div{
@@ -129,6 +173,44 @@
 	-webkit-animation-timing-function: linear;
 	-webkit-animation-duration: 0.5s;
 	-webkit-animation-iteration-count: 1;
+}
+@keyframes animation-item-in{
+	0%{
+		transform: scale(0);
+		-webkit-transform: scale(0);
+		-o-transform: scale(0);
+		opacity: 0;
+	}
+	35%{
+		transform: scale(1);
+		-webkit-transform: scale(1);
+		-o-transform: scale(1);
+		opacity: 1;
+	}
+	70%{
+		transform: scale(0.7);
+		-webkit-transform: scale(0.);
+		-o-transform: scale(0.7);
+		opacity: 1;
+	}
+	85%{
+		transform: scale(1);
+		-webkit-transform: scale(1);
+		-o-transform: scale(1);
+		opacity: 1;
+	}
+	95%{
+		transform: scale(0.9);
+		-webkit-transform: scale(0.9);
+		-o-transform: scale(0.9);
+		opacity: 1;
+	}
+	100%{
+		transform: scale(1);
+		-webkit-transform: scale(1);
+		-o-transform: scale(1);
+		opacity: 1;
+	}
 }
 
 #card-cont{
@@ -344,5 +426,44 @@
 }
 .tag-txt-off{
 	opacity: 0;
+}
+
+#detener-btn{
+	position: absolute;
+    display: block;
+    width: 136px;
+    height: 41px;
+    border-radius: 4px;
+    background: #E3E829;
+    background: linear-gradient(to bottom, #E3E829, #C6C62A);
+    background: -webkit-linear-gradient(to bottom, #E3E829, #C6C62A);
+    background: -o-linear-gradient(to bottom, #E3E829, #C6C62A);
+
+    margin: 0px;
+    padding: 0px;
+    border: none;
+
+    font-family: 'Barlow-Bold';
+    font-size: 18px;
+    color: #0033A0;
+    text-align: center;
+    font-weight: normal;
+    line-height: normal;
+    text-transform: uppercase;
+
+    left: 50%;
+    left: calc(50% - (136px / 2));
+    left: -moz-calc(50% - (136px / 2));
+    bottom: 15px;
+
+    transition: box-shadow 0.3s, transform 0.3s, -webkit-transform 0.3s, -o-transform 0.3s;
+    -webkit-transition: box-shadow 0.3s, transform 0.3s, -webkit-transform 0.3s, -o-transform 0.3s;
+}
+
+.detener-btn-off{
+	visibility: hidden;
+}
+.detener-btn-on{
+	visibility: visible;
 }
 /****************************************************/

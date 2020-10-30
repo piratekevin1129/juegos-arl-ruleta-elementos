@@ -55,7 +55,6 @@ function setInstrucciones(start){
 			action:'seguirJuego'
 	    })
     }
-    
 }
 
 var animacion_swipe = null
@@ -152,7 +151,7 @@ function putBands(){
 		var inx = findPart(bands[i])
 
 		var band_wp = document.createElement('div')
-		band_wp.className = 'banda-wrap'
+		band_wp.className = 'banda-wrap banda-off'
 		band_wp.id = 'banda'+bands[i]
 		band_wp.style.height = elementos[inx].height+'px'
 
@@ -166,11 +165,12 @@ function putBands(){
 			var u = unorder[j]
 			var div_epp = document.createElement('div')
 			div_epp.id = 'epp-'+elementos[inx].id+'-'+epp_collection[u].id
-			div_epp.className = 'banda-epp banda-epp-pos-'+(j+1)
-			div_epp.setAttribute('pos',(j+1))
+			div_epp.className = 'banda-epp banda-epp-pos-'+j
+			div_epp.setAttribute('pos',j)
+			div_epp.setAttribute('ind',epp_collection[u].id)
 			div_epp.style.width = epp_collection[u].size.w+'px'
 			div_epp.style.height = epp_collection[u].size.h+'px'
-			div_epp.innerHTML = '<div class="banda-epp-img" style="background-image:url('+epp_collection[u].url+'); top:'+epp_collection[u].size.y+'px; left:'+epp_collection[u].size.x+'px;"></div>'
+			div_epp.innerHTML = '<div class="banda-epp-img banda-epp-item-out" style="background-image:url('+epp_collection[u].url+'); top:'+epp_collection[u].size.y+'px; left:'+epp_collection[u].size.x+'px;"></div>'
 			band_div.appendChild(div_epp)
 			array.push(div_epp)
 		}
@@ -184,24 +184,6 @@ function putBands(){
 		})
 	}
 	console.log(bandas_data)
-}
-
-//aqui se empieza en forma
-var animacion_pista = null
-function startGame(){
-	vestirPersonajePista()
-
-	animacion_pista = setTimeout(function(){
-		clearTimeout(animacion_pista)
-		animacion_pista = null
-		getE('card-cont').className = 'card-off'
-
-		//ordenar orden de las bandas
-		orden_bandas = actual_job_data.parts.sort()
-		findBanda()
-		animarRueda()	
-	},4000)
-	
 }
 
 function setFondo(){
@@ -235,7 +217,11 @@ function vestirPersonajePista(){
 		div.style.backgroundImage = 'url('+epp_data.url+')'
 		div.style.left = epp_data.size.x+'px'
 		div.style.top = epp_data.size.y+'px'
+		items_selected.push(-1)
 	}
+
+	//ordenar orden de las bandas
+	orden_bandas = actual_job_data.parts.sort()
 
 	getE('card-cont').className = 'card-on'
 	if(actual_job_data.id==1){
@@ -250,11 +236,35 @@ function vestirPersonajePista(){
 	}
 }
 
+//aqui se empieza en forma
+var animacion_pista = null
+function startGame(){
+	vestirPersonajePista()
+
+	animacion_pista = setTimeout(function(){
+		clearTimeout(animacion_pista)
+		animacion_pista = null
+		getE('card-cont').className = 'card-off'
+
+		findBanda()
+	},4000)
+	
+}
+
+/************************************************/
+
 var animacion_rueda = null
-var animacion_para = null
-var actual_banda = 0
+var animacion_epp = null
+
 var actual_banda_ind = 0
+var actual_banda = 0//para array de los divs -> 4/5
+var actual_banda2 = 0//para array elementos -> 6
+var actual_banda_id = 0
+
 var orden_bandas = []
+var items_selected = []
+var epp_central = null
+var epp_central_data = null
 
 function findBanda(){
 	for(var b = 0;b<bandas_data.length;b++){
@@ -262,30 +272,102 @@ function findBanda(){
 			actual_banda = b
 		}
 	}
+	for(var b2 = 0;b2<elementos.length;b2++){
+		if(elementos[b2].id==orden_bandas[actual_banda_ind]){
+			actual_banda2 = b2
+		}
+	}
+	actual_banda_id = orden_bandas[actual_banda_ind]
+	console.log(actual_banda_id,actual_banda,actual_banda2)
+
+	//banda visible
+	getE('banda'+actual_banda_id).classList.remove('banda-off')
+	getE('banda'+actual_banda_id).classList.add('banda-on')
+	//poner a aparecer los epp
+	for(i = 0;i<bandas_data[actual_banda].epps.length;i++){
+		var equipo = bandas_data[actual_banda].epps[i]
+		var equipo_sub = equipo.getElementsByTagName('div')[0]
+		equipo_sub.classList.remove('banda-epp-item-out')
+		equipo_sub.classList.add('banda-epp-item-in')
+	}
+
+	animacion_epp = setTimeout(function(){
+		clearTimeout(animacion_epp)
+		animacion_epp = null
+		for(i = 0;i<bandas_data[actual_banda].epps.length;i++){
+			var equipo = bandas_data[actual_banda].epps[i]
+			var equipo_sub = equipo.getElementsByTagName('div')[0]
+			equipo_sub.classList.remove('banda-epp-item-in')
+		}
+
+		animarRueda()
+	},500)
+}
+
+function findIdEpp(id){
+	var ind = -1
+	for(k = 0;k<elementos[actual_banda2].elementos.length;k++){
+		if(elementos[actual_banda2].elementos[k].id==id){
+			ind = k
+		}
+	}
+	return ind
 }
 
 function animarRueda(){
 	//poner a correr todo
 	
-	animacion_rueda = setTimeout(function(){
-		//esperar y poner titulos
-
-		for(i = 0;i<bandas_data[actual_banda].length;i++){
-			var equipo = bandas_data[actual_banda][i]
-			var actual_pos = Number(equipo.getAttribute('pos'))
-			var new_pos = actual_pos-1
-			if(new_pos<0){
-				new_pos = 4
-			}
-			getE(equipo.id).setAttribute('pos',new_pos)
-			getE(equipo.id).className = 'banda-epp banda-epp-pos-'+new_pos
+	for(i = 0;i<bandas_data[actual_banda].epps.length;i++){
+		var equipo = bandas_data[actual_banda].epps[i]
+		var actual_pos = Number(equipo.getAttribute('pos'))
+		var new_pos = actual_pos-1
+		if(new_pos<0){
+			new_pos = 3
 		}
+		if(new_pos==2){
+			epp_central = equipo
+		}		
+		getE(equipo.id).setAttribute('pos',new_pos)
+		getE(equipo.id).className = 'banda-epp banda-epp-pos-'+new_pos
+	}
+
+	animacion_rueda = setTimeout(function(){
+		//ya paró, pongamos texto y esperemos 1 segundo
+		epp_central_data = elementos[actual_banda2].elementos[findIdEpp(epp_central.getAttribute('ind'))]
+		getE('tag-txt').innerHTML = epp_central_data.nombre
+		getE('tag-txt').className = "tag-txt-on"
+		getE('detener-btn').className = "detener-btn-on"
+
+		animacion_rueda = setTimeout(function(){
+			clearTimeout(animacion_rueda)
+			animacion_rueda = null
+
+			//seguir moviendo
+			getE('tag-txt').className = "tag-txt-off"
+			getE('detener-btn').className = "detener-btn-off"
+			animarRueda()
+		},1500)
 	},400)
 }
-function moveRueda(){
 
+function detenerRueda(){
+	clearTimeout(animacion_rueda)
+	animacion_rueda = null
+
+	getE('tag-txt').className = "tag-txt-off"
+	getE('detener-btn').className = "detener-btn-off"
+
+	//registrar la ropa seleccionada
+	items_selected[actual_banda_ind] = epp_central_data.id
+
+	//continuar siguiente banda
+	actual_banda_ind++
+	if(actual_banda_ind==orden_bandas.length){
+		alert("yaa")
+	}else{
+		findBanda()
+	}
 }
-
 
 ////////////////GAME FUNCITONS///////////////////////
 
