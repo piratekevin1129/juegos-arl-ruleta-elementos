@@ -363,7 +363,7 @@ function detenerRueda(){
 	//continuar siguiente banda
 	actual_banda_ind++
 	if(actual_banda_ind==orden_bandas.length){
-		alert("yaa")
+		//pasar estado de revisión
 	}else{
 		findBanda()
 	}
