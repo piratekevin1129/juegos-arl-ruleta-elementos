@@ -44,7 +44,7 @@ function loadImage(data){
         data.callBack({w:this.width,h:this.height,object:this})
     }
     img.onerror = function(){
-        console.log("error cargando la imagen "+img.url)
+        console.log("error cargando la imagen "+data.url)
         img.onerror = null
         img.onload = null
         data.callBack({w:0,h:0,object:null})

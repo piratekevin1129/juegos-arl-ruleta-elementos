@@ -74,7 +74,7 @@ function empezarJuego(){
 		//put bands
 		putBands()
 		putZonas()
-		startGame()
+		startGame(false)
 	})
 }
 
@@ -122,6 +122,12 @@ function loadElement(){
 			lista.id = 'listado-item-'+escenarios[i].id
 			lista.innerHTML = '<p>'+escenarios[i].nombre+'</p><div></div>'
 			getE('listado').appendChild(lista)
+
+			//para el responsive
+			var lista_r = document.createElement('div')
+			lista_r.className = 'listado-responsive-item listado-responsive-item-no'
+			lista_r.id = 'listado-item-r-'+escenarios[i].id
+			getE('listado-responsive').appendChild(lista_r)
 		}
 		var lista_t = document.createElement('div')
 		lista_t.className = 'listado-name'
@@ -138,22 +144,30 @@ function loadElement(){
 		},1000)
 	}else{
 		var url = 'assets/images/elementos/p'+(element_i+1)+'-'+(element_j+1)+'.png'
+		var url2 = 'assets/images/elementos/p'+(element_i+1)+'-'+(element_j+1)+'-s.png'
 
 		loadImage({url:url,callBack:function(data){
 			elementos[element_i].elementos[element_j].size.w = data.w
 			elementos[element_i].elementos[element_j].size.h = data.h
 			elementos[element_i].elementos[element_j].url = url
-			element_j++
-			if(data.h>top_alto){
-				top_alto = data.h
-			}
-			if(element_j==elementos[element_i].elementos.length){
-				elementos[element_i].height = top_alto
-				top_alto = 0
-				element_j = 0
-				element_i++
-			}
-			loadElement()
+			loadImage({url:url2, callBack:function(data){
+				elementos[element_i].elementos[element_j].sizes.w = data.w
+				elementos[element_i].elementos[element_j].sizes.h = data.h
+				elementos[element_i].elementos[element_j].urls = url2
+
+				element_j++
+				if(data.h>top_alto){
+					top_alto = data.h
+				}
+				if(element_j==elementos[element_i].elementos.length){
+					elementos[element_i].height = top_alto
+					top_alto = 0
+					element_j = 0
+					element_i++
+				}
+				loadElement()
+			}})
+			
 		}})
 	}	
 }
@@ -183,7 +197,7 @@ function putBands(){
 			div_epp.setAttribute('ind',epp_collection[u].id)
 			div_epp.style.width = epp_collection[u].size.w+'px'
 			div_epp.style.height = epp_collection[u].size.h+'px'
-			div_epp.innerHTML = '<div class="banda-epp-img banda-epp-item-out" style="background-image:url('+epp_collection[u].url+'); top:'+epp_collection[u].size.y+'px; left:'+epp_collection[u].size.x+'px;"></div>'
+			div_epp.innerHTML = '<div class="banda-epp-img banda-epp-item-out" style="background-image:url('+epp_collection[u].url+'); top:'+epp_collection[u].size.y+'px; left:'+epp_collection[u].size.x+'px;"><section style="width:'+epp_collection[u].sizes.w+'px; height:'+epp_collection[u].sizes.h+'px; background-image:url('+epp_collection[u].urls+')"></section></div>'
 			band_div.appendChild(div_epp)
 			array.push(div_epp)
 		}
@@ -235,9 +249,33 @@ function repetirAudio(e){
 	underground_mp3.play()
 }
 
+function sortArray(arr){
+	var sorted = []
+	var indices = []
+	while(sorted.length<arr.length){
+		var menor = 100
+		var ind = -1
+		for(var m = 0;m<arr.length;m++){
+			if(arr[m]<=menor&&!indices.includes(m)){
+				menor = arr[m]
+				ind = m
+			}
+		}
+		if(ind!=-1){
+			sorted.push(menor)
+			indices.push(ind)
+		}
+	}
+	return sorted
+}
+
 function vestirPersonajePista(){
+	console.log(actual_job_data.parts)
 	var partes = actual_job_data.parts
 	var epps = actual_job_data.epps
+
+	//console.log(partes)
+	//console.log(epps)
 	var v = 0;
 	for(v = 0;v<elementos.length;v++){
 		getE('personaje-card-p'+elementos[v].id).style.visibility = 'hidden'
@@ -252,6 +290,7 @@ function vestirPersonajePista(){
 
 		var ind = findEpp(epps[v],epp_coll)
 		var epp_data = epp_coll[ind]
+		//console.log(epp_data)
 		
 		var part = getE('personaje-card-p'+partes[v])
 		part.style.visibility = 'visible'
@@ -266,7 +305,8 @@ function vestirPersonajePista(){
 	}
 
 	//ordenar orden de las bandas
-	orden_bandas = actual_job_data.parts.sort()
+	var actual_job_parts = actual_job_data.parts
+	orden_bandas = sortArray(actual_job_parts)
 
 	getE('card-cont').className = 'card-on'
 	if(actual_job_data.id==1){
@@ -283,8 +323,11 @@ function vestirPersonajePista(){
 
 //aqui se empieza en forma
 var animacion_pista = null
-function startGame(){
-	setAudio()
+function startGame(repeat){
+	if(!repeat){
+		setAudio()
+	}
+	
 	vestirPersonajePista()
 
 	animacion_pista = setTimeout(function(){
@@ -310,6 +353,7 @@ var actual_banda_id = 0
 var orden_bandas = []
 var items_selected = []
 var epp_central = null
+var epp_central_section = null
 var epp_central_data = null
 var estado_revision = false
 
@@ -325,7 +369,8 @@ function findBanda(animation){
 		}
 	}
 	actual_banda_id = orden_bandas[actual_banda_ind]
-	//console.log(actual_banda_id)
+	//console.log(actual_banda,actual_banda2)
+	//console.log(orden_bandas)
 
 	if(animation){
 		//banda visible
@@ -383,13 +428,15 @@ function animarRueda(){
 		}
 		if(new_pos==2){
 			epp_central = equipo
-		}		
+			epp_central_section = epp_central.getElementsByTagName('section')[0]
+		}
 		getE(equipo.id).setAttribute('pos',new_pos)
 		getE(equipo.id).className = 'banda-epp banda-epp-pos-'+new_pos
 	}
 
 	animacion_rueda = setTimeout(function(){
 		//ya paró, pongamos texto y esperemos 1 segundo
+		epp_central_section.className = 'banda-epp-section-on'
 		epp_central_data = elementos[actual_banda2].elementos[findIdEpp(epp_central.getAttribute('ind'))]
 		getE('tag-txt').innerHTML = epp_central_data.nombre
 		getE('tag-txt').className = "tag-txt-on"
@@ -402,6 +449,7 @@ function animarRueda(){
 			//seguir moviendo
 			getE('tag-txt').className = "tag-txt-off"
 			getE('detener-btn').className = "detener-btn-off"
+			epp_central_section.className = ''
 			animarRueda()
 		},1500)
 	},400)
@@ -411,6 +459,7 @@ function detenerRueda(){
 	clearTimeout(animacion_rueda)
 	animacion_rueda = null
 
+	epp_central_section.className = ''
 	getE('tag-txt').className = "tag-txt-off"
 	getE('detener-btn').className = "detener-btn-off"
 
@@ -453,7 +502,11 @@ function detenerRueda(){
 			//console.log(epp_central_data.rects[i].y,yy)
 			rect.style.backgroundColor = cc
 		}
-		rect.setAttribute('onclick','clickCambiar('+actual_banda_ind+')')
+		rect.setAttribute('onclick','clickCambiar('+actual_banda_ind+','+actual_banda_id+','+epp_central_data.id+')')
+		if(!isresponsive){
+			rect.setAttribute('onmouseover','overCambiar('+actual_banda_id+','+epp_central_data.id+')')
+			rect.setAttribute('onmouseout','outCambiar('+actual_banda_id+','+epp_central_data.id+')')
+		}			
 
 		zona_div.appendChild(rect)
 	}
@@ -476,6 +529,12 @@ function detenerRueda(){
 			//swichear boton comprobar y detener
 			getE('detener-btn').className = 'detener-btn-off'
 			getE('comprobar-btn').className = 'comprobar-btn-on'
+			getE('tag-txt').className = "tag-txt-on"
+			if(isresponsive){
+				getE('tag-txt').innerHTML = 'Selecciona el epp que deseas modificar'
+			}else{
+				getE('tag-txt').innerHTML = 'Haz clic en el epp que deseas modificar'
+			}			
 
 			//poner instrucciones de la flecha
 			getE('check-flecha').className = 'check-flecha-on'
@@ -485,7 +544,25 @@ function detenerRueda(){
 	}
 }
 
-function clickCambiar(idband){
+function overCambiar(id_banda,id_item){
+	//console.log(id_banda,id_item)
+	var ep = getE('epp-'+id_banda+'-'+id_item)
+	var section = ep.getElementsByTagName('section')[0]
+	section.className = 'banda-epp-section-on'
+}
+function outCambiar(id_banda,id_item){
+	//console.log(id_banda,id_item)
+	var ep = getE('epp-'+id_banda+'-'+id_item)
+	var section = ep.getElementsByTagName('section')[0]
+	section.className = ''
+}
+
+function clickCambiar(idband,id_banda,id_item){
+	//quitar efectico
+	var ep = getE('epp-'+id_banda+'-'+id_item)
+	var section = ep.getElementsByTagName('section')[0]
+	section.className = ''
+
 	//remover zonas
 	var zona_parent = getE('zona-p'+orden_bandas[idband])
 	var zona_div = zona_parent.getElementsByTagName('div')[0]
@@ -496,6 +573,7 @@ function clickCambiar(idband){
 	//swichear boton comprobar y detener
 	getE('detener-btn').className = 'detener-btn-on'
 	getE('comprobar-btn').className = 'comprobar-btn-off'
+	getE('tag-txt').className = "tag-txt-off"
 
 	//quitar instrucciones de la flecha
 	getE('check-flecha').className = 'check-flecha-off'
@@ -523,7 +601,9 @@ function comprobarJuan(){
 
 	if(correctos==items_selected.length){
 		getE('listado-item-'+actual_job_data.id).classList.remove('listado-item-no')
-		getE('listado-item-'+actual_job_data.id).classList.remove('listado-item-yes')
+		getE('listado-item-'+actual_job_data.id).classList.add('listado-item-yes')
+		getE('listado-item-r-'+actual_job_data.id).classList.remove('listado-responsive-item-no')
+		getE('listado-item-r-'+actual_job_data.id).classList.add('listado-responsive-item-yes')
 
 		var titulo_final = '¡Muy bien!'
 		var texto_final = '<p>Has vestido al personaje correctamente. <br /><br />Haz clic en el botón <span>SIGUIENTE</span> para continuar con el próximo nivel</p>'
@@ -542,7 +622,7 @@ function comprobarJuan(){
 			content:texto_final,
 			button:true,
 			value:value_final,
-			final:true,
+			final:false,
 			action:action_final
 		})
 	}else{
@@ -552,7 +632,7 @@ function comprobarJuan(){
 			content:'<p>El personaje no está vestido con los equipos de protección adecuados para este trabajo. <br /><br />Haz clic en el botón <span>REPETIR</span> para intentarlo nuevamente</p>',
 			button:true,
 			value:'repetir',
-			final:true,
+			final:false,
 			action:'repetirEscenario'
 		})
 	}
@@ -569,7 +649,7 @@ function repetirEscenario(){
 			clearTimeout(animacion_repetir)
 			animacion_repetir = null
 
-			continueNext()
+			continueNext(true)
 		},750)
 	})
 }
@@ -584,7 +664,12 @@ function siguienteEscenario(){
 			clearTimeout(animacion_repetir)
 			animacion_repetir = null
 
-			setMask()
+			if(isresponsive){
+				setMask2()
+			}else{
+				setMask()
+			}
+			
 		},750)
 	})	
 }
@@ -613,8 +698,8 @@ function setMask(){
 		//t = 1000
 		var r = mask.getBoundingClientRect()
 		var a = (20*50)/t
-		var w = mask.offsetWidth
-		var h = mask.offsetHeight
+		var w = r.width//mask.offsetWidth
+		var h = r.height//mask.offsetHeight
 		var dw = (20*w)/t
 		var dh = (20*h)/t
 
@@ -654,6 +739,7 @@ function animateFondo(){
 			posh = cuadros_transition[i].h
 			sx = 0
 			sy = 0
+			radius = 0
 			cuadros_transition[i].stop = true
 		}
 
@@ -688,19 +774,34 @@ function animateFondo(){
 
 		getE('fondo-mask').innerHTML = ''
 		
-		if(actual_job==(escenarios.length-1)){
-			alert("yaaa")
-		}else{
-			actual_job++
-			actual_job_data = escenarios[actual_job]
-			continueNext()
-		}
+		actual_job++
+		actual_job_data = escenarios[actual_job]
+		continueNext(false)
 	}
 }
 
-function continueNext(){
+function setMask2(){//para responsive, solo alfa
+	getE('fondo-mask').className = 'fondo-out'
+	animacion_transition_fondo = setTimeout(function(){
+		clearTimeout(animacion_transition_fondo)
+		animacion_transition_fondo = null
+
+		actual_job++
+		actual_job_data = escenarios[actual_job]
+		continueNext(false)
+	},500)
+}
+
+function continueNext(repeat){
 	//reset
-	setFondo()
+	//repeat determina si se pasa al sigueinte o se repite
+	if(!repeat){
+		setFondo()
+		if(isresponsive){
+			getE('fondo-mask').className = 'fondo-in'
+		}
+	}
+	
 	bandas_data = []
 	actual_banda_ind = 0
 	actual_banda = 0//para array de los divs -> 4/5
@@ -710,6 +811,7 @@ function continueNext(){
 	orden_bandas = []
 	items_selected = []
 	epp_central = null
+	epp_central_section = null
 	epp_central_data = null
 	estado_revision = false
 
@@ -718,7 +820,7 @@ function continueNext(){
 	//put zonas y bandas
 	putBands()
 	putZonas()
-	startGame()
+	startGame(repeat)
 }
 
 ////////////////GAME FUNCTIONS///////////////////////

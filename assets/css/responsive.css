@@ -8,12 +8,445 @@
 	    -o-transform: scale(1.1);
 	    box-shadow: -1px 1px 2px 1px rgba(0,0,0,0.3);
 	}
+	.zona-rect{
+		cursor: pointer;
+	}
+	.card-on{
+		animation-name: animacion-carta-on;
+		animation-duration: 4s;
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+		animation-timing-function: linear;
+		-webkit-animation-name: animacion-carta-on;
+		-webkit-animation-duration: 4s;
+		-webkit-animation-iteration-count: 1;
+		-webkit-animation-fill-mode: forwards;
+		-webkit-animation-timing-function: linear;
+	}
+	.card-off{
+		top: 50px;
+		opacity: 0;
+	}
+
+	.banda-epp-pos-0{
+		left: 90%;
+		opacity: 0;
+		animation-name: animacion-pos-0;
+		-webkit-animation-name: animacion-pos-0;
+	}
+	.banda-epp-pos-1{
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-name: animacion-pos-1;
+		-webkit-animation-name: animacion-pos-1;
+	}
+	.banda-epp-pos-2{
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-name: animacion-pos-2;
+		-webkit-animation-name: animacion-pos-2;
+	}
+	.banda-epp-pos-3{
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-name: animacion-pos-3;
+		-webkit-animation-name: animacion-pos-3;
+	}
+	.banda-epp-item-in{
+		animation-name: animation-item-in;
+		animation-timing-function: linear;
+		animation-duration: 0.5s;
+		animation-iteration-count: 1;
+		-webkit-animation-name: animation-item-in;
+		-webkit-animation-timing-function: linear;
+		-webkit-animation-duration: 0.5s;
+		-webkit-animation-iteration-count: 1;
+	}
+
+	#modal-button:hover,#repetir-btn:hover{
+	    cursor: pointer;
+	    transform: scale(1.1);
+	    -webkit-transform: scale(1.1);
+	    -o-transform: scale(1.1);
+	    background-color: #0097A3;
+	}
 }
 
 @media (min-width: 560px) and (max-width: 767px){
+    #container{
+        width: 100%;
+        height: 578px;
+    }
+    .logo-sura{
+        margin-left: 10px;
+    }
+    .titulo{
+        margin-right: 10px;
+    }
+    .logo-arl{
+        margin-left: 10px;
+    }
+    #oficio-title{
+        margin-right: 10px;
+    }
+
+    .fondo{
+        background-size: cover;
+    }
+
+    /************MAIN**************/
+    #detener-btn,#comprobar-btn{
+	    cursor: pointer;
+	}
+	#detener-btn:hover,#comprobar-btn:hover{
+	    transform: scale(1.1);
+	    -webkit-transform: scale(1.1);
+	    -o-transform: scale(1.1);
+	    box-shadow: -1px 1px 2px 1px rgba(0,0,0,0.3);
+	}
+    .zona-rect{
+		cursor: pointer;
+	}
+	.card-on{
+		animation-name: animacion-carta-on;
+		animation-duration: 4s;
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+		animation-timing-function: linear;
+		-webkit-animation-name: animacion-carta-on;
+		-webkit-animation-duration: 4s;
+		-webkit-animation-iteration-count: 1;
+		-webkit-animation-fill-mode: forwards;
+		-webkit-animation-timing-function: linear;
+	}
+	.card-off{
+		top: 50px;
+		opacity: 0;
+	}
+	.banda-epp-pos-0{
+		left: 90%;
+		opacity: 0;
+		animation-name: animacion-pos-0;
+		-webkit-animation-name: animacion-pos-0;
+	}
+	.banda-epp-pos-1{
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-name: animacion-pos-1;
+		-webkit-animation-name: animacion-pos-1;
+	}
+	.banda-epp-pos-2{
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-name: animacion-pos-2;
+		-webkit-animation-name: animacion-pos-2;
+	}
+	.banda-epp-pos-3{
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-name: animacion-pos-3;
+		-webkit-animation-name: animacion-pos-3;
+	}
+	.banda-epp-item-in{
+		animation-name: animation-item-in;
+		animation-timing-function: linear;
+		animation-duration: 0.5s;
+		animation-iteration-count: 1;
+		-webkit-animation-name: animation-item-in;
+		-webkit-animation-timing-function: linear;
+		-webkit-animation-duration: 0.5s;
+		-webkit-animation-iteration-count: 1;
+	}
+    /******************************/
+
+    /************MODAL**************/
+    #modal-box{
+        width: 350px;
+        padding: 10px;
+    }
     
+    #modal-title{
+        font-size: 18px;
+    }
+    
+    #modal-button:hover,#repetir-btn:hover{
+	    cursor: pointer;
+	    transform: scale(1.1);
+	    -webkit-transform: scale(1.1);
+	    -o-transform: scale(1.1);
+	    background-color: #0097A3;
+	}
 }
 
 @media (min-width: 280px) and (max-width: 559px){
+    #container{
+        width: 100%;
+        height: 578px;
+    }
+    .logo-sura{
+        margin-left: 10px;
+    }
+    .titulo{
+        margin-right: 10px;
+        width: 200px;
+        width: calc(100% - (73px + 30px));
+        width: -moz-calc(100% - (73px + 30px));
+    }
+    .logo-arl{
+        margin-left: 10px;
+    }
+    #oficio-title{
+        margin-right: 10px;
+    }
+
+    .fondo{
+        background-size: cover;
+        background-image: url(../images/fondo-v3.jpg);
+    }
+
+    #game-wrapper{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+
+    /**************MAIN**************/
+    #fondo-mask{
+    	background-color: #FFFFFF;
+    	opacity: 0;
+    	visibility: hidden;
+    }
+    .fondo-out{
+    	opacity: 1 !important;
+    	visibility: visible !important;
+    	
+    	transition: opacity 0.5s, visibility 0s;
+    	-webkit-transition: opacity 0.5s, visibility 0s;
+    }
+    .fondo-in{
+    	opacity: 0 !important;
+    	visibility: hidden !important;
+    	
+    	transition: opacity 0.5s, visibility 0.5s;
+    	-webkit-transition: opacity 0.5s, visibility 0.5s;
+    }
+    #bandas{
+		width: 600px;
+
+		left: 50%;
+		left: calc(50% - 300px);
+		left: -moz-calc(50% - 300px);
+	}
+	#card-cont{
+		left: 10px;
+		top: 10px;
+	}
+	#card-wrap{
+		width: 99px;
+		height: 145px;
+	}
+	.card-on{
+		animation-name: animacion-carta-on-2;
+		animation-duration: 4s;
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+		animation-timing-function: linear;
+		-webkit-animation-name: animacion-carta-on-2;
+		-webkit-animation-duration: 4s;
+		-webkit-animation-iteration-count: 1;
+		-webkit-animation-fill-mode: forwards;
+		-webkit-animation-timing-function: linear;
+	}
+	.card-off{
+		opacity: 0;
+	}
+
+	#card{
+		transform: scale(0.36);
+		-webkit-transform: scale(0.36);
+		-o-transform: scale(0.36);
+	}
+	#card-flecha-img,#check-flecha-img{
+		animation: none;
+		animation: unset;
+		-webkit-animation: none;
+		-webkit-animation: unset;
+	}
+	#card-flecha{
+		display: none !important;
+		margin-top: 10px;
+		width: 99px;
+	}
+	#check-flecha{
+		bottom: 10px;
+		left: 50%;
+		left: calc(50% + 5px);
+		left: -moz-calc(50% + 5px);
+
+		width: 150px;
+		height: 40px;
+	}
+	#card-flecha-txt{
+		margin-top: 0px;
+		font-size: 14px;
+	}
+	#check-flecha-txt{
+		width: 100%;
+		width: calc(100% - 60px);
+		width: -moz-calc(100% - 60px);
+		font-size: 14px;
+	}
+	.check-flecha-on{
+		display: none !important;
+	}
+
+	.banda-epp-pos-0{
+		left: 90%;
+		opacity: 0;
+		animation-name: animacion-pos-r-0;
+		-webkit-animation-name: animacion-pos-r-0;
+	}
+	.banda-epp-pos-1{
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-name: animacion-pos-r-1;
+		-webkit-animation-name: animacion-pos-r-1;
+	}
+	.banda-epp-pos-2{
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-name: animacion-pos-r-2;
+		-webkit-animation-name: animacion-pos-r-2;
+	}
+	.banda-epp-pos-3{
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-name: animacion-pos-r-3;
+		-webkit-animation-name: animacion-pos-r-3;
+	}
+	.banda-epp-item-in{
+		animation-name: animation-item-in-r;
+		animation-timing-function: linear;
+		animation-duration: 0.5s;
+		animation-iteration-count: 1;
+		-webkit-animation-name: animation-item-in-r;
+		-webkit-animation-timing-function: linear;
+		-webkit-animation-duration: 0.5s;
+		-webkit-animation-iteration-count: 1;
+	}
+
+	#tag-txt{
+		height: 20px;
+		font-size: 18px;
+		transition: none;
+		-webkit-transition: none;
+	}
+
+    #detener-btn,#comprobar-btn{
+	    width: 120px;
+	    height: 30px;
+	    
+	    font-size: 15px;
+	    
+	    left: 50%;
+	    left: calc(50% - 60px);
+	    left: -moz-calc(50% - 60px);
+	    bottom: 15px;
+	    box-shadow: -1px 1px 2px 1px rgba(0,0,0,0.3);
+    }
+
+	#listado-responsive{
+		position: absolute;
+		width: 25px;
+		height: auto;
+		display: block;
+		
+		margin: 0px;
+		padding: 0px;
+		right: 0px;
+		top: 10px;
+
+		background: #e3e3e3;
+		background: linear-gradient(to bottom, #f7f7f7, #cdcdcd);
+		background: -webkit-linear-gradient(to bottom, #f7f7f7, #cdcdcd);
+		background: -o-linear-gradient(to bottom, #f7f7f7, #cdcdcd);
+		border-radius: 10px 0px 0px 10px;
+	}
+	.listado-responsive-item{
+		position: relative;
+		width: 100%;
+		height: 25px;
+		margin: 0px;
+		padding: 0px;
+		box-sizing: border-box;
+		background-repeat: no-repeat;
+		background-size: 18px 18px;
+		background-position: center;
+	}
+	.listado-responsive-item::after{
+		position: absolute;
+		content: "";
+		width: 90%;
+		height: 1px;
+		top: 100%;
+		top: calc(100% - 0.5px);
+		top: -moz-calc(100% - 0.5px);
+		left: 5%;
+		background: #9f9f9f;
+		background: linear-gradient(to right, rgba(153,153,153,0), rgba(153,153,153,1), rgba(153,153,153,0));
+		background: -webkit-linear-gradient(to right, rgba(153,153,153,0), rgba(153,153,153,1), rgba(153,153,153,0));
+		background: -o-linear-gradient(to right, rgba(153,153,153,0), rgba(153,153,153,1), rgba(153,153,153,0));
+	}
+	.listado-responsive-item-yes{
+		background-image: url(../images/check.svg);
+	}
+	.listado-responsive-item-no{
+		background-image: url(../images/uncheck.svg);
+	}
+	#listado-responsive .listado-responsive-item:nth-child(3)::after{
+		display: none;
+	}
+	#listado{
+		display: none;
+	}
+
+    /************MODAL**************/
+    #modal-box{
+        width: 95%;
+        padding: 10px;
+    }
     
+    #modal-title{
+        font-size: 18px;
+    }
+    #modal-button{
+        cursor: default;
+        background-color: #0097A3;
+    }
+    #modal-close-btn{
+        cursor: default;
+    }
+    .modal-instrucciones-gif > div{
+        cursor: default;
+    }
+    .modal-instrucciones-gif > div video{
+        cursor: default;
+    }
+    .modal-instrucciones-gif > div button{
+        cursor: default;
+    }
+
+    /********TOOLTIP*********/
+    #tooltip{
+        width: 90%;
+        top: 15%;
+    }
+    .tooltip-off{
+        right: -100%;
+    }
+    .tooltip-on{
+        right: 5%;
+    }
 }

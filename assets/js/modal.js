@@ -34,6 +34,7 @@ function setModal(data){
 
 	if(data.final!=null&&data.final!=undefined){
 		if(data.final){
+			alert("final")
 			getE('modal-box').className = 'modal-box-final'
 		}else{
 			getE('modal-box').className = ''

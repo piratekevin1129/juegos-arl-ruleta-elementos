@@ -11,7 +11,9 @@ var elementos = [
 				rects:[
 					{w:90,h:90,x:5,y:5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:2,
@@ -20,7 +22,9 @@ var elementos = [
 				rects:[
 					{w:90,h:90,x:5,y:5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:3,
@@ -29,7 +33,9 @@ var elementos = [
 				rects:[
 					{w:90,h:90,x:5,y:5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:4,
@@ -38,7 +44,9 @@ var elementos = [
 				rects:[
 					{w:80,h:90,x:10,y:5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			}
 		]
 	},
@@ -52,9 +60,11 @@ var elementos = [
 				nombre:'Gafas de buseo',
 				size:{w:0,h:0,x:0,y:-4},
 				rects:[
-					{w:100,h:60,x:0,y:0,c:'#000000'}
+					{w:100,h:60,x:0,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:2,
@@ -63,7 +73,9 @@ var elementos = [
 				rects:[
 					{w:100,h:100,x:0,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:3,
@@ -72,7 +84,9 @@ var elementos = [
 				rects:[
 					{w:90,h:60,x:5,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:4,
@@ -81,7 +95,9 @@ var elementos = [
 				rects:[
 					{w:90,h:60,x:5,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			}
 		]
 	},
@@ -97,7 +113,9 @@ var elementos = [
 				rects:[
 					{w:90,h:90,x:5,y:5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:2,
@@ -106,7 +124,9 @@ var elementos = [
 				rects:[
 					{w:90,h:90,x:5,y:5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:3,
@@ -115,16 +135,20 @@ var elementos = [
 				rects:[
 					{w:90,h:90,x:5,y:5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:4,
 				nombre:'Respirador',
 				size:{w:0,h:0,x:-4,y:-7},
 				rects:[
-					{w:100,h:70,x:0,y:30,c:'#000000'}
+					{w:100,h:70,x:0,y:30}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			}
 		]
 	},
@@ -140,7 +164,9 @@ var elementos = [
 				rects:[
 					{w:95,h:95,x:2.5,y:2.5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:2,
@@ -149,7 +175,9 @@ var elementos = [
 				rects:[
 					{w:90,h:90,x:5,y:5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:3,
@@ -158,7 +186,9 @@ var elementos = [
 				rects:[
 					{w:95,h:95,x:2.5,y:2.5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:4,
@@ -167,7 +197,9 @@ var elementos = [
 				rects:[
 					{w:90,h:95,x:5,y:2.5}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			}
 		]
 	},
@@ -184,7 +216,9 @@ var elementos = [
 					{w:25,h:100,x:0,y:0},
 					{w:25,h:100,x:75,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:2,
@@ -194,7 +228,9 @@ var elementos = [
 					{w:25,h:100,x:0,y:0},
 					{w:25,h:100,x:75,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:3,
@@ -204,7 +240,9 @@ var elementos = [
 					{w:25,h:100,x:0,y:0},
 					{w:25,h:100,x:75,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:4,
@@ -214,7 +252,9 @@ var elementos = [
 					{w:25,h:100,x:0,y:0},
 					{w:25,h:100,x:75,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			}
 		]
 	},
@@ -230,7 +270,9 @@ var elementos = [
 				rects:[
 					{w:85,h:100,x:7.5,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:2,
@@ -239,7 +281,9 @@ var elementos = [
 				rects:[
 					{w:85,h:100,x:7.5,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:3,
@@ -248,7 +292,9 @@ var elementos = [
 				rects:[
 					{w:85,h:100,x:7.5,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			},
 			{
 				id:4,
@@ -257,7 +303,9 @@ var elementos = [
 				rects:[
 					{w:90,h:100,x:5,y:0}
 				],
-				url:""
+				url:"",
+				sizes:{w:0,h:0},
+				urls:""
 			}
 		]
 	}
