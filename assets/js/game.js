@@ -106,12 +106,16 @@ var bandas_data = []
 function setGame(){
 	setFondo()
 	//cargar las imagenes de los elementos
+	loader_count = parseInt((100/elementos.length))
+	getE('cargador_txt').innerHTML = (loader_count*loader)+'%'
 	loadElement()
 }
 
 var element_i = 0
 var element_j = 0
 var top_alto = 0
+var loader_count = 0
+var loader = 0
 
 function loadElement(){
 	if(element_i==elementos.length){
@@ -164,6 +168,8 @@ function loadElement(){
 					top_alto = 0
 					element_j = 0
 					element_i++
+					loader++
+					getE('cargador_txt').innerHTML = (loader_count*loader)+'%'
 				}
 				loadElement()
 			}})
