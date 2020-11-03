@@ -739,7 +739,7 @@
 
 .listado-name{
 	height: 30px;
-	border-radius: 10px;
+	border-radius: 0px 0px 10px 10px;
 	background: #d5d5d5;
 	background: linear-gradient(to bottom, #FFFFFF, #cbcbcb);
 	background: -webkit-linear-gradient(to bottom, #FFFFFF, #cbcbcb);

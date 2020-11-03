@@ -589,6 +589,7 @@ function comprobarJuan(){
 	getE('detener-btn').className = 'detener-btn-off'
 	getE('comprobar-btn').className = 'comprobar-btn-off'
 	getE('check-flecha').className = 'check-flecha-off'
+	getE('tag-txt').className = "tag-txt-off"
 	estado_revision = false
 
 	var correctos = 0
