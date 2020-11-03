@@ -1,8 +1,8 @@
 @media (min-width: 768px){
-    #detener-btn{
+    #detener-btn,#comprobar-btn{
 	    cursor: pointer;
 	}
-	#detener-btn:hover{
+	#detener-btn:hover,#comprobar-btn:hover{
 	    transform: scale(1.1);
 	    -webkit-transform: scale(1.1);
 	    -o-transform: scale(1.1);

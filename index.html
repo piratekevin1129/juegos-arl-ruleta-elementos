@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   
+    
     <!--Jquery-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     
@@ -39,7 +39,9 @@
         </header>
 
         <div id="game">
-            <div id="fondo"></div>
+            <div id="fondo">
+                <div id="fondo-mask"></div>
+            </div>
             <div id="game-scene">
                 <div id="game-wrapper">
                     <div id="personaje">
@@ -47,10 +49,21 @@
                     </div>
 
                     <div id="bandas">
-
                     </div>
+
+                    <div id="zonas" class="zonas-off">
+                    </div>
+
                     <div id="tag-txt" class="tag-txt-off"></div>
+                    <div id="listado"></div>
+
                     <button id="detener-btn" class="detener-btn-off" onclick="detenerRueda()">Detener</button>
+                    <button id="comprobar-btn" class="comprobar-btn-off" onclick="comprobarJuan()">Comprobar</button>
+
+                    <div id="check-flecha" class="check-flecha-off">
+                        <div id="check-flecha-img"></div>
+                        <p id="check-flecha-txt">Clic aquí para comprobar</p>
+                    </div>
                 </div>
             </div>
             <div id="home-scene">
@@ -60,10 +73,10 @@
                 <div id="card-wrap">
                     <div id="card">
                         <div id="personaje-card">
+                            <div id="personaje-card-p4"><div></div></div>
                             <div id="personaje-card-p1"><div></div></div>
                             <div id="personaje-card-p2"><div></div></div>
                             <div id="personaje-card-p3"><div></div></div>
-                            <div id="personaje-card-p4"><div></div></div>
                             <div id="personaje-card-p5"><div></div></div>
                             <div id="personaje-card-p6"><div></div></div>
                         </div>
@@ -77,8 +90,6 @@
             </div>
 
         </div>
-
-        <div id="tooltip" class="tooltip-off"></div>
 
         <div id="modal" class="modal-on">
             <div id="modal-box">
@@ -103,15 +114,20 @@
 <script>
 
 var boton_mp3 = null
+var underground_mp3 = null
 
 var animation_start = null
 window.onload = function(){
 
     loadAudio({src:'assets/media/boton.mp3',callBack:function(data){
     boton_mp3 = data
-        loadImage({url:'assets/images/escenario_1.jpg',callBack:function(){
-        loadImage({url:'assets/images/escenario_2.jpg',callBack:function(){
-        loadImage({url:'assets/images/escenario_3.jpg',callBack:function(){
+        loadImage({url:'assets/images/escenario_1.jpg',callBack:function(data){
+        loadImage({url:'assets/images/escenario_2.jpg',callBack:function(data){
+        loadImage({url:'assets/images/escenario_3.jpg',callBack:function(data){
+
+        loadImage({url:'assets/images/personaje-v1.png',callBack:function(data){
+        loadImage({url:'assets/images/personaje-v2.png',callBack:function(data){
+        loadImage({url:'assets/images/personaje-v3.png',callBack:function(data){
 
             prepareWindow()
             setGame()
@@ -119,10 +135,13 @@ window.onload = function(){
         }})
         }})
         }})
-        
+
+        }})
+        }})
+        }})
     }})
 
-    }
+}
     
 </script>
 </body>

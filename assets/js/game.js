@@ -71,6 +71,9 @@ function empezarJuego(){
 		
 		getE('cargador').className = 'cargador-off'
 
+		//put bands
+		putBands()
+		putZonas()
 		startGame()
 	})
 }
@@ -112,9 +115,18 @@ var top_alto = 0
 
 function loadElement(){
 	if(element_i==elementos.length){
-		//put bands
-		putBands()
-		
+		//hacer el listado
+		for(i = 0;i<escenarios.length;i++){
+			var lista = document.createElement('div')
+			lista.className = 'listado-item listado-item-no'
+			lista.id = 'listado-item-'+escenarios[i].id
+			lista.innerHTML = '<p>'+escenarios[i].nombre+'</p><div></div>'
+			getE('listado').appendChild(lista)
+		}
+		var lista_t = document.createElement('div')
+		lista_t.className = 'listado-name'
+		lista_t.innerHTML = '<p>Escenarios completados</p>'
+		getE('listado').appendChild(lista_t)
 		////////AQUI EMPIEZA TODOO///////
 		
 		animation_start = setTimeout(function(){
@@ -145,6 +157,7 @@ function loadElement(){
 		}})
 	}	
 }
+
 function putBands(){
 	var bands = actual_job_data.parts
 	for(i = 0;i<bands.length;i++){
@@ -175,19 +188,51 @@ function putBands(){
 			array.push(div_epp)
 		}
 
-
 		band_wp.appendChild(band_div)
 		getE('bandas').appendChild(band_wp)
 		bandas_data.push({
 			id:bands[i],
-			epps:array
+			epps:array,
+			banda:band_wp
 		})
 	}
-	console.log(bandas_data)
+	//console.log(bandas_data)
+}
+
+function putZonas(){
+	var bands = actual_job_data.parts
+	for(i = 0;i<bands.length;i++){
+		var inx = findPart(bands[i])
+
+		var zona_wp = document.createElement('div')
+		zona_wp.className = 'zona'
+		zona_wp.id = 'zona-p'+bands[i]
+
+		zona_wp.innerHTML = '<div></div>'
+		getE('zonas').appendChild(zona_wp)
+		console.log("puso")
+	}
 }
 
 function setFondo(){
 	getE('fondo').className = 'fondo-'+actual_job_data.id
+	
+}
+function setAudio(){
+	//anular audio actual
+	if(underground_mp3!=null){
+		underground_mp3.pause()
+		underground_mp3.removeEventListener('ended', repetirAudio, false)
+		underground_mp3 = null
+	}
+
+	underground_mp3 = new Audio('assets/media/'+actual_job_data.audio)
+	//underground_mp3.currentTime = 0
+	underground_mp3.play()
+	underground_mp3.addEventListener('ended', repetirAudio, false)
+}
+function repetirAudio(e){
+	underground_mp3.play()
 }
 
 function vestirPersonajePista(){
@@ -239,6 +284,7 @@ function vestirPersonajePista(){
 //aqui se empieza en forma
 var animacion_pista = null
 function startGame(){
+	setAudio()
 	vestirPersonajePista()
 
 	animacion_pista = setTimeout(function(){
@@ -246,9 +292,9 @@ function startGame(){
 		animacion_pista = null
 		getE('card-cont').className = 'card-off'
 
-		findBanda()
+		findBanda(true)
+		//setMask()
 	},4000)
-	
 }
 
 /************************************************/
@@ -265,8 +311,9 @@ var orden_bandas = []
 var items_selected = []
 var epp_central = null
 var epp_central_data = null
+var estado_revision = false
 
-function findBanda(){
+function findBanda(animation){
 	for(var b = 0;b<bandas_data.length;b++){
 		if(bandas_data[b].id==orden_bandas[actual_banda_ind]){
 			actual_banda = b
@@ -278,30 +325,40 @@ function findBanda(){
 		}
 	}
 	actual_banda_id = orden_bandas[actual_banda_ind]
-	console.log(actual_banda_id,actual_banda,actual_banda2)
+	//console.log(actual_banda_id)
 
-	//banda visible
-	getE('banda'+actual_banda_id).classList.remove('banda-off')
-	getE('banda'+actual_banda_id).classList.add('banda-on')
+	if(animation){
+		//banda visible
+		getE('banda'+actual_banda_id).classList.remove('banda-off')
+		getE('banda'+actual_banda_id).classList.add('banda-on')
+	}
+	
 	//poner a aparecer los epp
 	for(i = 0;i<bandas_data[actual_banda].epps.length;i++){
 		var equipo = bandas_data[actual_banda].epps[i]
 		var equipo_sub = equipo.getElementsByTagName('div')[0]
-		equipo_sub.classList.remove('banda-epp-item-out')
-		equipo_sub.classList.add('banda-epp-item-in')
+		if(animation){
+			equipo_sub.classList.remove('banda-epp-item-out')
+			equipo_sub.classList.add('banda-epp-item-in')
+		}
 	}
 
-	animacion_epp = setTimeout(function(){
-		clearTimeout(animacion_epp)
-		animacion_epp = null
-		for(i = 0;i<bandas_data[actual_banda].epps.length;i++){
-			var equipo = bandas_data[actual_banda].epps[i]
-			var equipo_sub = equipo.getElementsByTagName('div')[0]
-			equipo_sub.classList.remove('banda-epp-item-in')
-		}
+	if(animation){
+		animacion_epp = setTimeout(function(){
+			clearTimeout(animacion_epp)
+			animacion_epp = null
+			for(i = 0;i<bandas_data[actual_banda].epps.length;i++){
+				var equipo = bandas_data[actual_banda].epps[i]
+				var equipo_sub = equipo.getElementsByTagName('div')[0]
+				equipo_sub.classList.remove('banda-epp-item-in')
+			}
 
+			//console.log(bandas_data)
+			animarRueda()
+		},500)
+	}else{
 		animarRueda()
-	},500)
+	}	
 }
 
 function findIdEpp(id){
@@ -358,18 +415,313 @@ function detenerRueda(){
 	getE('detener-btn').className = "detener-btn-off"
 
 	//registrar la ropa seleccionada
-	items_selected[actual_banda_ind] = epp_central_data.id
+	items_selected[actual_banda] = epp_central_data.id
 
-	//continuar siguiente banda
-	actual_banda_ind++
-	if(actual_banda_ind==orden_bandas.length){
-		//pasar estado de revisión
+	//poner zona con las propiedades
+	var zona_parent = getE('zona-p'+actual_banda_id)
+	var zona_div = zona_parent.getElementsByTagName('div')[0]
+
+	//zona_parent.style.width = epp_central_data.size.w+'px'
+	//zona_parent.style.height = epp_central_data.size.h+'px'
+	var translate_x = Math.floor((epp_central_data.size.w/2)*10)/10
+	zona_parent.style.transform = 'translateX(-'+translate_x+'px)'
+	zona_parent.style.webkitTransform = 'translateX(-'+translate_x+'px)'
+	zona_parent.style.otransform = 'translateX(-'+translate_x+'px)'
+	zona_div.style.left = epp_central_data.size.x+'px'
+	zona_div.style.top = epp_central_data.size.y+'px'
+
+	//agregar zonas reales
+	for(i = 0;i<epp_central_data.rects.length;i++){
+		var rect = document.createElement('div')
+		rect.className = 'zona-rect'
+		var ww = Math.round((epp_central_data.size.w*epp_central_data.rects[i].w)/100)
+		var hh = Math.round((epp_central_data.size.h*epp_central_data.rects[i].h)/100)
+		var xx = Math.round((epp_central_data.size.w*epp_central_data.rects[i].x)/100)
+		var yy = Math.round((epp_central_data.size.h*epp_central_data.rects[i].y)/100)
+		var cc = epp_central_data.rects[i].c
+
+		//var ww = epp_central_data.rects[i].w
+		//var hh = epp_central_data.rects[i].h
+		//var xx = epp_central_data.rects[i].x
+		//var yy = epp_central_data.rects[i].y
+
+		rect.style.width = ww+'px'
+		rect.style.height = hh+'px'
+		rect.style.left = xx+'px'
+		rect.style.top = yy+'px'
+		if(cc!=null&&cc!=undefined){
+			//console.log(epp_central_data.rects[i].y,yy)
+			rect.style.backgroundColor = cc
+		}
+		rect.setAttribute('onclick','clickCambiar('+actual_banda_ind+')')
+
+		zona_div.appendChild(rect)
+	}
+
+	//mirar si está en estado de revisión
+	if(estado_revision){
+		getE('zonas').className = 'zonas-on'
+		//swichear boton comprobar y detener
+		getE('detener-btn').className = 'detener-btn-off'
+		getE('comprobar-btn').className = 'comprobar-btn-on'
+		//poner instrucciones de la flecha
+		getE('check-flecha').className = 'check-flecha-on'
 	}else{
-		findBanda()
+		//continuar siguiente banda
+		actual_banda_ind++
+		if(actual_banda_ind==orden_bandas.length){
+			//pasar estado de revisión
+			estado_revision = true
+			getE('zonas').className = 'zonas-on'
+			//swichear boton comprobar y detener
+			getE('detener-btn').className = 'detener-btn-off'
+			getE('comprobar-btn').className = 'comprobar-btn-on'
+
+			//poner instrucciones de la flecha
+			getE('check-flecha').className = 'check-flecha-on'
+		}else{
+			findBanda(true)
+		}
 	}
 }
 
-////////////////GAME FUNCITONS///////////////////////
+function clickCambiar(idband){
+	//remover zonas
+	var zona_parent = getE('zona-p'+orden_bandas[idband])
+	var zona_div = zona_parent.getElementsByTagName('div')[0]
+	
+	zona_div.innerHTML = ''
+
+	getE('zonas').className = 'zonas-off'
+	//swichear boton comprobar y detener
+	getE('detener-btn').className = 'detener-btn-on'
+	getE('comprobar-btn').className = 'comprobar-btn-off'
+
+	//quitar instrucciones de la flecha
+	getE('check-flecha').className = 'check-flecha-off'
+
+	actual_banda_ind = idband
+	findBanda(false)
+}
+
+function comprobarJuan(){
+	//console.log(items_selected)
+	//console.log(actual_job_data.epps)
+	getE('zonas').className = 'zonas-off'
+	getE('detener-btn').className = 'detener-btn-off'
+	getE('comprobar-btn').className = 'comprobar-btn-off'
+	getE('check-flecha').className = 'check-flecha-off'
+	estado_revision = false
+
+	var correctos = 0
+
+	for(i = 0;i<items_selected.length;i++){
+		if(items_selected[i]==actual_job_data.epps[i]){
+			correctos++
+		}
+	}
+
+	if(correctos==items_selected.length){
+		getE('listado-item-'+actual_job_data.id).classList.remove('listado-item-no')
+		getE('listado-item-'+actual_job_data.id).classList.remove('listado-item-yes')
+
+		var titulo_final = '¡Muy bien!'
+		var texto_final = '<p>Has vestido al personaje correctamente. <br /><br />Haz clic en el botón <span>SIGUIENTE</span> para continuar con el próximo nivel</p>'
+		var value_final = 'siguiente'
+		var action_final = 'siguienteEscenario'
+
+		if(actual_job==(escenarios.length-1)){
+			titulo_final = '¡Felicitaciones!'
+			texto_final = '<p>Has vestido al personaje correctamente en los tres tipos de trabajo</p>'
+			value_final = 'jugar otra vez'
+			action_final = 'repeatGame'
+		}
+		setModal({
+			close:false,
+			title:titulo_final,
+			content:texto_final,
+			button:true,
+			value:value_final,
+			final:true,
+			action:action_final
+		})
+	}else{
+		setModal({
+			close:false,
+			title:'¡Incorrecto!',
+			content:'<p>El personaje no está vestido con los equipos de protección adecuados para este trabajo. <br /><br />Haz clic en el botón <span>REPETIR</span> para intentarlo nuevamente</p>',
+			button:true,
+			value:'repetir',
+			final:true,
+			action:'repetirEscenario'
+		})
+	}
+}
+
+var animacion_repetir = null
+function repetirEscenario(){
+	unsetModal(function(){
+		//tirar bandas al piso
+		for(i = 0;i<bandas_data.length;i++){
+			bandas_data[i].banda.classList.add('banda-out')
+		}
+		animacion_repetir = setTimeout(function(){
+			clearTimeout(animacion_repetir)
+			animacion_repetir = null
+
+			continueNext()
+		},750)
+	})
+}
+
+function siguienteEscenario(){
+	unsetModal(function(){
+		//tirar bandas al piso
+		for(i = 0;i<bandas_data.length;i++){
+			bandas_data[i].banda.classList.add('banda-out')
+		}
+		animacion_repetir = setTimeout(function(){
+			clearTimeout(animacion_repetir)
+			animacion_repetir = null
+
+			setMask()
+		},750)
+	})	
+}
+
+var animacion_transition_fondo = null
+var cuadros_transition = []
+var canvas_data = {
+	w:getE('fondo-mask').offsetWidth,
+	h:getE('fondo-mask').offsetHeight,
+}
+var cuadros_total = 20
+var cuadros_frame = 0
+
+function setMask(){
+	cuadros_transition = []
+	cuadros_frame = 0
+	
+	//for(i = 0;i<1;i++){
+	for(i = 0;i<cuadros_total;i++){
+		var mask = document.createElement('div')
+		mask.className = 'fondo-mask-sprite'
+		mask.innerHTML = '<div id="mask-sprite-'+i+'"><div id="mask-sprite-sub-'+i+'" style="width:'+canvas_data.w+'px; height:'+canvas_data.h+'px;" class="fondo-'+(actual_job_data.id+1)+'"></div></div>'
+		getE('fondo-mask').appendChild(mask)
+
+		var t = getRand(100,1000)
+		//t = 1000
+		var r = mask.getBoundingClientRect()
+		var a = (20*50)/t
+		var w = mask.offsetWidth
+		var h = mask.offsetHeight
+		var dw = (20*w)/t
+		var dh = (20*h)/t
+
+		cuadros_transition.push({
+			x:r.left,
+			y:r.top,
+			w:w,
+			h:h,
+			t:t,
+			f:1,
+			a:a,//border-radius
+			dw:dw,
+			dh:dh,
+			stop:false,
+			id:'mask-sprite-'+i,
+			subid:'mask-sprite-sub-'+i
+		})
+		//console.log(dw,dh)
+	}
+	animacion_transition_fondo = setInterval(animateFondo,20)
+}
+
+function animateFondo(){
+	for(i = 0;i<cuadros_transition.length;i++){
+		var px = (cuadros_transition[i].w/2)
+		var py = (cuadros_transition[i].h/2)
+		var posw = (cuadros_transition[i].dw*cuadros_transition[i].f)
+		var posh = (cuadros_transition[i].dh*cuadros_transition[i].f)
+		var radius = 50-(cuadros_transition[i].a*cuadros_transition[i].f)
+
+		var sx = px-(posw/2)
+		var sy = py-(posh/2)
+		//console.log(posw,posh)
+
+		if(posw>=cuadros_transition[i].w){
+			posw = cuadros_transition[i].w
+			posh = cuadros_transition[i].h
+			sx = 0
+			sy = 0
+			cuadros_transition[i].stop = true
+		}
+
+		var div1 = getE(cuadros_transition[i].id)
+		var div2 = getE(cuadros_transition[i].subid)
+		div1.style.width = posw+'px'
+		div1.style.height = posh+'px'
+		div1.style.left = sx+'px'
+		div1.style.top = sy+'px'
+		div1.style.borderRadius = radius+'%'
+
+		var rect_x = div1.getBoundingClientRect().left-getE('fondo-mask').getBoundingClientRect().left
+		var rect_y = div1.getBoundingClientRect().top-getE('fondo-mask').getBoundingClientRect().top
+
+		div2.style.left = '-'+rect_x+'px'
+		div2.style.top = '-'+rect_y+'px'
+		
+		//getE(cuadros_transition[i].id).style.backgroundImage = 'none'
+
+		if(!cuadros_transition[i].stop){
+			cuadros_transition[i].f++
+		}
+		
+	}
+
+	cuadros_frame+=20
+	//console.log(cuadros_frame)
+	if(cuadros_frame==1000){
+		console.log("ya")
+		clearInterval(animacion_transition_fondo)
+		animacion_transition_fondo = null
+
+		getE('fondo-mask').innerHTML = ''
+		
+		if(actual_job==(escenarios.length-1)){
+			alert("yaaa")
+		}else{
+			actual_job++
+			actual_job_data = escenarios[actual_job]
+			continueNext()
+		}
+	}
+}
+
+function continueNext(){
+	//reset
+	setFondo()
+	bandas_data = []
+	actual_banda_ind = 0
+	actual_banda = 0//para array de los divs -> 4/5
+	actual_banda2 = 0//para array elementos -> 6
+	actual_banda_id = 0
+
+	orden_bandas = []
+	items_selected = []
+	epp_central = null
+	epp_central_data = null
+	estado_revision = false
+
+	getE('bandas').innerHTML = ''
+	getE('zonas').innerHTML = ''
+	//put zonas y bandas
+	putBands()
+	putZonas()
+	startGame()
+}
+
+////////////////GAME FUNCTIONS///////////////////////
 
 function endGame(){
 	

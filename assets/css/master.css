@@ -115,6 +115,7 @@ header{
     height: calc(100% - 73px);
     height: -moz-calc(100% - 73px);
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 #home-scene{
