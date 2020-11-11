@@ -29,10 +29,11 @@ function setInstrucciones(start){
 		html+='<div class="modal-instrucciones-gif"><div onclick="setVideoInstrucciones(this)"><video loop><source type="video/mp4" src="assets/images/instrucciones_pc.mp4" /></video><button></button></div></div>'
 	}*/
 	
-	html+='<p>Selecciona los <span>Equipos de Protección Personal</span> que necesita Juan para quedar idéntico al dibujo que se encuentra en la parte superior izquierda.</p>'
-	html+='<p>Haz clic en el botón <span>"Jugar"</span> para comenzar el juego.</p>'
-	html+='<p>Cuando identifiques el EPP correcto haz clic en el botón <span>"Detener"</span></p>'
-	html+='<p><span>Completa los 3 escenarios para ganar el Juego.</span></p>'
+	html+='<p>Escoge los <span>Equipos de Protección Personal</span> que necesita Juan para realizar el trabajo correspondiente.</p>'
+	html+='<p>El juego te dará una pista para reconocer los elementos correctos en cada escenario. Cuando los identifiques, haz clic en el botón <span>"Detener"</span> y continúa seleccionando los demás.</p>'
+	html+='<p><span>Completa los 3 escenarios para ganar el juego.</span></p>'
+	html+='<p>Haz clic en el botón <span>"Jugar"</span> para comenzar.</p>'
+	
 
     if(start){
     	setModal({
@@ -325,6 +326,7 @@ function vestirPersonajePista(){
 		getE('personaje-card').className = 'personaje-3'
 		getE('personaje-main').className = 'personaje-3'
 	}
+	getE('oficio-title-txt').innerHTML = actual_job_data.nombre
 }
 
 //aqui se empieza en forma
@@ -862,10 +864,10 @@ function getE(idname){
 
 function clickAudio(btn){
 	if(btn.className=='music-on'){
-		cronometro_mp3.volume = 0
+		//cronometro_mp3.volume = 0
 		btn.className = 'music-off'
 	}else{
-		cronometro_mp3.volume = 1
+		//cronometro_mp3.volume = 1
 		btn.className = 'music-on'
 	}
 }
